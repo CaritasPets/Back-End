@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Organizacao, Porte, Raca, Usuario, Voluntario
+
+admin.site.register(Organizacao)
+admin.site.register(Porte)
+admin.site.register(Raca)
+admin.site.register(Usuario)
+admin.site.register(Voluntario)

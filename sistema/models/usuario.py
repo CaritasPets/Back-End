@@ -8,7 +8,8 @@ class Usuario(models.Model):
     email = models.CharField(max_length=320, unique=True, null=False, blank=False)
     nome_completo = models.CharField(max_length=100, null=True, blank=True)
     endereco = models.CharField(max_length=100, null=True, blank=True)
-    data_nascimento = models.DateField
+
+    data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
 
     def __str__(self):
         return f'{self.username} ({self.cpf})'
