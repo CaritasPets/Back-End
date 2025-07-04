@@ -15,3 +15,7 @@ class Organizacao(models.Model):
     )
     def __str__(self):
         return f"{self.nome}"
+    
+    class Meta:
+        verbose_name = 'Organização'
+        verbose_name_plural = 'Organizações'
