@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
-from models import Pet
-from models import Perdidos
+from ..models import Pet
+from ..models import Perdidos
 
 
 class PetSerializer(ModelSerializer):

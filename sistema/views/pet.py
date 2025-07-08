@@ -1,8 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
-from models import Pet
-from models import Perdidos
-from serializers import PetSerializer
-from serializers import PerdidosSerializer
+from ..models import Pet
+from ..models import Perdidos
+from ..serializers import PetSerializer
+from ..serializers import PerdidosSerializer
 
 
 class PetViewSet(ModelViewSet):

@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
-from models import Organizacao
-from serializers import OrganizacaoSerializer
+from ..models import Organizacao
+from ..serializers import OrganizacaoSerializer
 
 
 class OrganizacaoViewSet(ModelViewSet):
