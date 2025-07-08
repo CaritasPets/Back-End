@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from models import Voluntario
+from ..models import Voluntario
 
 
 class VoluntarioSerializer(ModelSerializer):

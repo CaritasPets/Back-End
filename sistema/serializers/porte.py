@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from models import Porte
+from ..models import Porte
 
 
 class PorteSerializer(ModelSerializer):

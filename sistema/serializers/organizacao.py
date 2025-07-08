@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from models import Organizacao
+from ..models import Organizacao
 
 
 class OrganizacaoSerializer(ModelSerializer):

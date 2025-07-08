@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from models import Raca
+from ..models import Raca
 
 
 class RacaSerializer(ModelSerializer):
