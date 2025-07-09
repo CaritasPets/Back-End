@@ -5,6 +5,7 @@ from .raca import Raca
 from .usuario import Usuario
 from .porte import Porte
 from .voluntario import Voluntario
+from uploader.models import Image
 
 class Pet(models.Model):
     VACINADO_CHOICES = [
@@ -37,6 +38,17 @@ class Pet(models.Model):
     usuario = models.ForeignKey(
         Usuario, on_delete=models.PROTECT, related_name="pets"
     )
+    foto = models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
+
+    def __str__(self):
+        return f"{self.tipo} ({self.usuario})"
 
 class Perdidos(models.Model):
     VACINADO_CHOICES = [
@@ -72,3 +84,14 @@ class Perdidos(models.Model):
     voluntario = models.ForeignKey(
         Voluntario, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
+    foto = models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
+
+    def __str__(self):
+        return f"{self.tipo} ({self.usuario})"
