@@ -8,15 +8,13 @@ from rest_framework_simplejwt.views import (
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
-from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet, PorteViewSet, RacaViewSet, UsuarioViewSet, VoluntarioViewSet
+from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet, PorteViewSet, RacaViewSet
 
 router.register(r"organizacoes", OrganizacaoViewSet)
 router.register(r"pets", PetViewSet)
 router.register(r"perdidos", PerdidosViewSet)
 router.register(r"portes", PorteViewSet)
 router.register(r"racas", RacaViewSet)
-router.register(r"usuario", UsuarioViewSet)
-router.register(r"voluntarios", VoluntarioViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

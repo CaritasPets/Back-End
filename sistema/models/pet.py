@@ -2,9 +2,7 @@ from django.db import models
 
 from .organizacao import Organizacao
 from .raca import Raca
-from .usuario import Usuario
 from .porte import Porte
-from .voluntario import Voluntario
 
 class Pet(models.Model):
     VACINADO_CHOICES = [
@@ -34,9 +32,6 @@ class Pet(models.Model):
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets"
     )
-    usuario = models.ForeignKey(
-        Usuario, on_delete=models.PROTECT, related_name="pets"
-    )
 
 class Perdidos(models.Model):
     VACINADO_CHOICES = [
@@ -65,10 +60,4 @@ class Perdidos(models.Model):
     )
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
-    usuario = models.ForeignKey(
-        Usuario, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
-    voluntario = models.ForeignKey(
-        Voluntario, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
