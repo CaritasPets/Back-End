@@ -3,7 +3,6 @@ from django.db import models
 from .organizacao import Organizacao
 from .raca import Raca
 from .porte import Porte
-from .voluntario import Voluntario
 from uploader.models import Image
 
 class Pet(models.Model):
@@ -35,9 +34,6 @@ class Pet(models.Model):
         Organizacao, on_delete=models.PROTECT, related_name="pets"
     )
 
-    usuario = models.ForeignKey(
-        Usuario, on_delete=models.PROTECT, related_name="pets"
-    )
     foto = models.ForeignKey(
         Image,
         related_name="+",
@@ -48,7 +44,7 @@ class Pet(models.Model):
     )
 
     def __str__(self):
-        return f"{self.tipo} ({self.usuario})"
+        return f"{self.tipo} ({self.org})"
 
 class Perdidos(models.Model):
     VACINADO_CHOICES = [
@@ -79,10 +75,6 @@ class Perdidos(models.Model):
         Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
     
-    usuario = models.ForeignKey(
-        Usuario, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
-    
     foto = models.ForeignKey(
         Image,
         related_name="+",
@@ -93,5 +85,5 @@ class Perdidos(models.Model):
     )
 
     def __str__(self):
-        return f"{self.tipo} ({self.usuario})"
+        return f"{self.tipo} ({self.org})"
 
