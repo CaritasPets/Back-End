@@ -2,10 +2,14 @@ from django.db import models
 
 from .organizacao import Organizacao
 from .raca import Raca
-from .porte import Porte
 from uploader.models import Image
 
 class Pet(models.Model):
+    PORTE_CHOICES = [
+        ('p', 'Pequeno'),
+        ('m', 'Médio'),
+        ('g', 'Grande')
+    ]
     VACINADO_CHOICES = [
         ('s', 'sim'),
         ('n', 'nao')
@@ -27,9 +31,7 @@ class Pet(models.Model):
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets"
     )
-    porte = models.ForeignKey(
-        Porte, on_delete=models.PROTECT, related_name="pets"
-    )
+    porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets"
     )
@@ -47,6 +49,11 @@ class Pet(models.Model):
         return f"{self.tipo} ({self.org})"
 
 class Perdidos(models.Model):
+    PORTE_CHOICES = [
+        ('p', 'Pequeno'),
+        ('m', 'Médio'),
+        ('g', 'Grande')
+    ]
     VACINADO_CHOICES = [
         ('s', 'sim'),
         ('n', 'nao')
@@ -68,9 +75,7 @@ class Perdidos(models.Model):
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
-    porte = models.ForeignKey(
-        Porte, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
+    porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
