@@ -1,7 +1,5 @@
 from .auth import (
     UserRegistrationView,
-    VoluntarioRegistrationView,
-    OrganizacaoRegistrationView,
     UserLoginView,
     UserProfileView,
     UserLogoutView,
@@ -10,8 +8,6 @@ from .auth import (
 
 __all__ = [
     'UserRegistrationView',
-    'VoluntarioRegistrationView',
-    'OrganizacaoRegistrationView',
     'UserLoginView',
     'UserProfileView',
     'UserLogoutView',

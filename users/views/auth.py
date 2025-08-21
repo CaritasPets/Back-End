@@ -9,8 +9,6 @@ from django.contrib.auth import login
 from users.models import User
 from users.serializers import (
     UserRegistrationSerializer,
-    VoluntarioRegistrationSerializer,
-    OrganizacaoRegistrationSerializer,
     UserLoginSerializer,
     UserProfileSerializer,
 )
@@ -38,75 +36,6 @@ class UserRegistrationView(generics.CreateAPIView):
                 'id': user.id,
                 'username': user.username,
                 'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'tipo_usuario': user.tipo_usuario,
-            },
-            'tokens': {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
-        }, status=status.HTTP_201_CREATED)
-
-
-class VoluntarioRegistrationView(generics.CreateAPIView):
-    """
-    View para registro de voluntários
-    """
-    queryset = User.objects.all()
-    serializer_class = VoluntarioRegistrationSerializer
-    permission_classes = [permissions.AllowAny]
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        
-        # Gerar tokens JWT
-        refresh = RefreshToken.for_user(user)
-        
-        return Response({
-            'message': 'Voluntário cadastrado com sucesso!',
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'tipo_usuario': user.tipo_usuario,
-            },
-            'tokens': {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
-        }, status=status.HTTP_201_CREATED)
-
-
-class OrganizacaoRegistrationView(generics.CreateAPIView):
-    """
-    View para registro de organizações
-    """
-    queryset = User.objects.all()
-    serializer_class = OrganizacaoRegistrationSerializer
-    permission_classes = [permissions.AllowAny]
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        
-        # Gerar tokens JWT
-        refresh = RefreshToken.for_user(user)
-        
-        return Response({
-            'message': 'Organização cadastrada com sucesso!',
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'tipo_usuario': user.tipo_usuario,
             },
             'tokens': {
                 'refresh': str(refresh),
@@ -141,9 +70,6 @@ class UserLoginView(APIView):
                 'id': user.id,
                 'username': user.username,
                 'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'tipo_usuario': user.tipo_usuario,
             },
             'tokens': {
                 'refresh': str(refresh),
@@ -214,9 +140,6 @@ def user_info(request):
         'id': user.id,
         'username': user.username,
         'email': user.email,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'tipo_usuario': user.tipo_usuario,
         'is_authenticated': True,
     })
 
@@ -265,9 +188,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                     'id': user.id,
                     'username': user.username,
                     'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
-                    'tipo_usuario': user.tipo_usuario,
+                    'nome': user.nome,
                 }
             except User.DoesNotExist:
                 pass
