@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from sistema.models import Organizacao
+from uploader.models import Image
 
 
 class User(AbstractUser):
@@ -42,6 +43,14 @@ class User(AbstractUser):
         null=True,
         blank=True,
         verbose_name='Data de Nascimento'
+    )
+    foto_perfil = models.ForeignKey(
+        Image,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='Foto de Perfil',
+        related_name='usuarios'
     )
     
     def __str__(self):
@@ -129,7 +138,6 @@ class PerfilOrganizacao(models.Model):
         auto_now_add=True,
         verbose_name='Data de Cadastro'
     )
-    
     def __str__(self):
         return f"Organização: {self.organizacao.nome}"
     

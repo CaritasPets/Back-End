@@ -14,12 +14,11 @@ from uploader.router import router as uploader_router
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
-from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet, PorteViewSet, RacaViewSet
+from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet, RacaViewSet
 
 router.register(r"organizacoes", OrganizacaoViewSet)
 router.register(r"pets", PetViewSet)
 router.register(r"perdidos", PerdidosViewSet)
-router.register(r"portes", PorteViewSet)
 router.register(r"racas", RacaViewSet)
 
 urlpatterns = [

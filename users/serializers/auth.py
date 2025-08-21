@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from users.models import User, PerfilVoluntario, PerfilOrganizacao
 from sistema.models import Organizacao
+from uploader.serializers.image import ImageSerializer
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -20,12 +21,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True, required=True)
+    foto_perfil = serializers.UUIDField(required=False, write_only=True)
     
     class Meta:
         model = User
         fields = (
             'username', 'password', 'password2', 'email', 'first_name',
-            'last_name', 'cpf', 'telefone', 'endereco', 'data_nascimento'
+            'last_name', 'cpf', 'telefone', 'endereco', 'data_nascimento', 'foto_perfil'
         )
         extra_kwargs = {
             'first_name': {'required': True},
@@ -40,6 +42,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return attrs
     
     def create(self, validated_data):
+        foto_perfil_id = validated_data.pop('foto_perfil', None)
         validated_data.pop('password2', None)
         user = User.objects.create_user(
             username=validated_data['username'],
@@ -53,6 +56,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             data_nascimento=validated_data.get('data_nascimento'),
             tipo_usuario='comum'
         )
+        
+        # Set profile picture if provided
+        if foto_perfil_id:
+            try:
+                from uploader.models import Image
+                image = Image.objects.get(attachment_key=foto_perfil_id)
+                user.foto_perfil = image
+                user.save()
+            except Image.DoesNotExist:
+                pass  # Ignore if image doesn't exist
+        
         return user
 
 
@@ -72,13 +86,14 @@ class VoluntarioRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
     especialidades = serializers.CharField(required=False, allow_blank=True)
     disponibilidade = serializers.CharField(required=False, allow_blank=True)
+    foto_perfil = serializers.UUIDField(required=False, write_only=True)
     
     class Meta:
         model = User
         fields = (
             'username', 'password', 'password2', 'email', 'first_name',
             'last_name', 'cpf', 'telefone', 'endereco', 'data_nascimento',
-            'especialidades', 'disponibilidade'
+            'especialidades', 'disponibilidade', 'foto_perfil'
         )
         extra_kwargs = {
             'first_name': {'required': True},
@@ -95,6 +110,7 @@ class VoluntarioRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         especialidades = validated_data.pop('especialidades', '')
         disponibilidade = validated_data.pop('disponibilidade', '')
+        foto_perfil_id = validated_data.pop('foto_perfil', None)
         validated_data.pop('password2', None)
         
         user = User.objects.create_user(
@@ -109,6 +125,16 @@ class VoluntarioRegistrationSerializer(serializers.ModelSerializer):
             data_nascimento=validated_data.get('data_nascimento'),
             tipo_usuario='voluntario'
         )
+        
+        # Set profile picture if provided
+        if foto_perfil_id:
+            try:
+                from uploader.models import Image
+                image = Image.objects.get(attachment_key=foto_perfil_id)
+                user.foto_perfil = image
+                user.save()
+            except Image.DoesNotExist:
+                pass  # Ignore if image doesn't exist
         
         # Criar perfil de voluntário
         PerfilVoluntario.objects.create(
@@ -134,6 +160,7 @@ class OrganizacaoRegistrationSerializer(serializers.ModelSerializer):
         validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True, required=True)
+    foto_perfil = serializers.UUIDField(required=False, write_only=True)
     
     # Campos da organização
     nome_organizacao = serializers.CharField(required=True)
@@ -154,7 +181,7 @@ class OrganizacaoRegistrationSerializer(serializers.ModelSerializer):
             'last_name', 'cpf', 'telefone', 'endereco',
             'nome_organizacao', 'cnpj', 'email_organizacao',
             'telefone_organizacao', 'endereco_organizacao', 'descricao_organizacao',
-            'responsavel', 'cargo'
+            'responsavel', 'cargo', 'foto_perfil'
         )
         extra_kwargs = {
             'first_name': {'required': True},
@@ -190,6 +217,7 @@ class OrganizacaoRegistrationSerializer(serializers.ModelSerializer):
         # Extrair dados do perfil
         responsavel = validated_data.pop('responsavel')
         cargo = validated_data.pop('cargo', '')
+        foto_perfil_id = validated_data.pop('foto_perfil', None)
         validated_data.pop('password2', None)
         
         # Criar usuário
@@ -204,6 +232,16 @@ class OrganizacaoRegistrationSerializer(serializers.ModelSerializer):
             endereco=validated_data.get('endereco'),
             tipo_usuario='organizacao'
         )
+        
+        # Set profile picture if provided
+        if foto_perfil_id:
+            try:
+                from uploader.models import Image
+                image = Image.objects.get(attachment_key=foto_perfil_id)
+                user.foto_perfil = image
+                user.save()
+            except Image.DoesNotExist:
+                pass  # Ignore if image doesn't exist
         
         # Criar organização
         organizacao = Organizacao.objects.create(**org_data)
@@ -258,6 +296,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     perfil_voluntario = serializers.SerializerMethodField()
     perfil_organizacao = serializers.SerializerMethodField()
+    foto_perfil = ImageSerializer(read_only=True)
     
     class Meta:
         model = User
@@ -265,7 +304,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'id', 'username', 'email', 'first_name', 'last_name',
             'cpf', 'telefone', 'endereco', 'data_nascimento',
             'tipo_usuario', 'date_joined', 'perfil_voluntario',
-            'perfil_organizacao'
+            'perfil_organizacao', 'foto_perfil'
         )
         read_only_fields = ('id', 'username', 'date_joined', 'tipo_usuario')
     
