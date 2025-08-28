@@ -5,8 +5,6 @@ from rest_framework_simplejwt.views import (
 )
 from users.views import (
     UserRegistrationView,
-    VoluntarioRegistrationView,
-    OrganizacaoRegistrationView,
     UserLoginView,
     UserProfileView,
     UserLogoutView,
@@ -19,8 +17,6 @@ app_name = 'users'
 urlpatterns = [
     # Registro
     path('register/', UserRegistrationView.as_view(), name='user-register'),
-    path('register/voluntario/', VoluntarioRegistrationView.as_view(), name='voluntario-register'),
-    path('register/organizacao/', OrganizacaoRegistrationView.as_view(), name='organizacao-register'),
     
     # Autenticação
     path('login/', UserLoginView.as_view(), name='user-login'),
