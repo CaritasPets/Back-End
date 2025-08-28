@@ -3,6 +3,7 @@ from django.db import models
 from .organizacao import Organizacao
 from .raca import Raca
 from uploader.models import Image
+from users.models import User
 
 class Pet(models.Model):
     PORTE_CHOICES = [
@@ -76,10 +77,14 @@ class Perdidos(models.Model):
         Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
-    org = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
+    user = models.ForeignKey(
+        User,
+        related_name="user",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None
     )
-    
     foto = models.ForeignKey(
         Image,
         related_name="+",

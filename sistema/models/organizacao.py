@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 class Organizacao(models.Model):
     nome = models.CharField(max_length=45, unique=True, null=False, default='Nome da Organização')
@@ -8,7 +9,7 @@ class Organizacao(models.Model):
     telefone = models.CharField(max_length=11, null=True, blank=True)
     endereco = models.CharField(max_length=100, null=False, blank=False)
     descricao = models.CharField(max_length=200, null=True, blank=True)
-
+    users = models.ManyToManyField(User)
     def __str__(self):
         return f"{self.nome}"
     
