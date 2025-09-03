@@ -22,8 +22,14 @@ class Pet(models.Model):
         ('m', 'macho'),
         ('f', 'femea')
     ]
-    
-    tipo = models.CharField(max_length=25, null=False, blank=False)
+    TIPO_CHOICES = [
+        ('cachorro', 'Cachorro'),
+        ('gato', 'Gato'),
+        ('outro', 'Outro')
+    ]
+
+    nome = models.CharField(max_length=50, null=False, blank=False, default='')
+    tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
     castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
@@ -66,8 +72,14 @@ class Perdidos(models.Model):
         ('m', 'macho'),
         ('f', 'femea')
     ]      
+    TIPO_CHOICES = [
+        ('cachorro', 'Cachorro'),
+        ('gato', 'Gato'),
+        ('outro', 'Outro')
+    ]
 
-    tipo = models.CharField(max_length=25, null=False, blank=False)
+    nome = models.CharField(max_length=50, null=False, blank=False, default='')
+    tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
     castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')

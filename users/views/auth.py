@@ -1,4 +1,5 @@
-from rest_framework import status, generics, permissions
+from rest_framework import status, generics
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,7 +21,7 @@ class UserRegistrationView(generics.CreateAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [AllowAny]
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -48,7 +49,7 @@ class UserLoginView(APIView):
     """
     View para login de usuários
     """
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [AllowAny]
     
     def post(self, request):
         serializer = UserLoginSerializer(
@@ -82,7 +83,7 @@ class UserLogoutView(APIView):
     """
     View para logout de usuários
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def post(self, request):
         try:
@@ -104,7 +105,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     View para visualizar e atualizar perfil do usuário
     """
     serializer_class = UserProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get_object(self):
         return self.request.user
@@ -130,7 +131,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def user_info(request):
     """
     View simples para obter informações do usuário autenticado
@@ -145,7 +146,7 @@ def user_info(request):
 
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def change_password(request):
     """
     View para alterar senha do usuário
