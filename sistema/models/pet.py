@@ -1,6 +1,5 @@
 from django.db import models 
 
-from .organizacao import Organizacao
 from .raca import Raca
 from uploader.models import Image
 
@@ -38,9 +37,7 @@ class Pet(models.Model):
         Raca, on_delete=models.PROTECT, related_name="pets"
     )
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
-    org = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT, related_name="pets"
-    )
+    
 
     foto = models.ForeignKey(
         Image,
@@ -88,9 +85,7 @@ class Perdidos(models.Model):
         Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
-    org = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
+    
     
     foto = models.ForeignKey(
         Image,
