@@ -1,11 +1,11 @@
-from .auth import (
+from .user import (
     UserRegistrationSerializer,
-    UserLoginSerializer,
+    LoginSerializer,
     UserProfileSerializer,
 )
 
 __all__ = [
     'UserRegistrationSerializer',
-    'UserLoginSerializer', 
+    'LoginSerializer', 
     'UserProfileSerializer',
 ]

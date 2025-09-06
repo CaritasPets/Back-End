@@ -10,7 +10,7 @@ from users.views import (
     UserLogoutView,
     CustomTokenObtainPairView,
 )
-from users.views.auth import user_info, change_password
+from users.views.user import user_info, change_password
 
 app_name = 'users'
 

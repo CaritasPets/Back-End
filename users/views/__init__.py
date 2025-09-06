@@ -1,11 +1,10 @@
-from .auth import (
+from .user import (
     UserRegistrationView,
     UserLoginView,
     UserProfileView,
     UserLogoutView,
-    CustomTokenObtainPairView,
 )
-
+from .auth import CustomTokenObtainPairView
 __all__ = [
     'UserRegistrationView',
     'UserLoginView',

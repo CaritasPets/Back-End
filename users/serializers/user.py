@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
-from users.models import User
+from ..models import User
 from uploader.serializers.image import ImageSerializer
 
 
@@ -49,7 +49,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         
         return user
 
-class UserLoginSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     """
     Serializer para login de usuários
     """
