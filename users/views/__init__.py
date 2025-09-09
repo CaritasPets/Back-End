@@ -1,14 +1,16 @@
 from .user import (
     UserRegistrationView,
-    UserLoginView,
     UserProfileView,
-    UserLogoutView,
 )
-from .auth import CustomTokenObtainPairView
+from .auth import (
+    CustomTokenObtainPairView,
+    LoginView,
+    LogoutView
+)
 __all__ = [
     'UserRegistrationView',
-    'UserLoginView',
+    'LoginView',
     'UserProfileView',
-    'UserLogoutView',
+    'LogoutView',
     'CustomTokenObtainPairView',
 ]

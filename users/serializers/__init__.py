@@ -3,9 +3,14 @@ from .user import (
     LoginSerializer,
     UserProfileSerializer,
 )
-
+from .organization import (
+    OrganizationProfileSerializer,
+    OrganizationRegistrationSerializer
+)
 __all__ = [
+    'LoginSerializer',
     'UserRegistrationSerializer',
-    'LoginSerializer', 
     'UserProfileSerializer',
+    'OrganizationProfileSerializer',
+    'OrganizationRegistrationSerializer'
 ]

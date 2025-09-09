@@ -43,4 +43,8 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
             except Image.DoesNotExist:
                 pass
         return organization
-    
+
+class OrganizationProfileSerializer(serializers.ModelSerializer):
+    foto_perfil = ImageSerializer(read_only=True)
+    fields = ('username', 'foto_perfil', 'telefone', 'email', 'endereco', 'cnpj', 'instagram', 'facebook')
+    read_only_fields=('id', 'username', 'date_joined')

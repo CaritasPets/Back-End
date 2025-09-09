@@ -3,11 +3,11 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from users.views import (
+from .views import (
     UserRegistrationView,
-    UserLoginView,
+    LoginView,
     UserProfileView,
-    UserLogoutView,
+    LogoutView,
     CustomTokenObtainPairView,
 )
 from users.views.user import user_info, change_password
@@ -19,8 +19,8 @@ urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='user-register'),
     
     # Autenticação
-    path('login/', UserLoginView.as_view(), name='user-login'),
-    path('logout/', UserLogoutView.as_view(), name='user-logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     
     # JWT Tokens
     path('token/', CustomTokenObtainPairView.as_view(), name='token-obtain-pair'),
