@@ -2,6 +2,7 @@ from django.db import models
 
 from .organizacao import Organizacao
 from .raca import Raca
+from users.models import User
 from uploader.models import Image
 
 class Pet(models.Model):
@@ -32,22 +33,21 @@ class Pet(models.Model):
     tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
     castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
+    genero = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
     vacinado = models.CharField(max_length=1, choices=VACINADO_CHOICES, default='n')
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets"
     )
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
     org = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT, related_name="pets"
+        Organizacao, on_delete=models.PROTECT, related_name="pets_organizacao"
     )
-
     foto = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         default=None,
     )
 
@@ -82,22 +82,25 @@ class Perdidos(models.Model):
     tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
     data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
     castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
+    genero = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
     vacinado = models.CharField(max_length=1, choices=VACINADO_CHOICES, default='n')
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
-    org = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT, related_name="pets_perdidos"
+    dono = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='perdidos_user',
+        default=None
     )
-    
+    local = models.CharField(max_length=100, null=False, blank=False, default='')
     foto = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         default=None,
     )
 
