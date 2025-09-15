@@ -1,4 +1,4 @@
-from rest_framework import status, generics
+from rest_framework import status, generics, parsers
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -37,6 +37,7 @@ class UserRegistrationView(generics.CreateAPIView):
                 'id': user.id,
                 'username': user.username,
                 'email': user.email,
+                'name': user.nome
             },
             'tokens': {
                 'refresh': str(refresh),
@@ -139,8 +140,13 @@ def user_info(request):
     user = request.user
     return Response({
         'id': user.id,
+        'foto_perfil': user.foto_perfil,
         'username': user.username,
         'email': user.email,
+        'nome': user.nome,
+        'telefone': user.telefone,
+        'cpf': user.cpf,
+        'data_nascimento': user.data_nascimento,
         'is_authenticated': True,
     })
 

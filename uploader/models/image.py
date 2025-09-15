@@ -2,6 +2,7 @@ import mimetypes
 import uuid
 
 from django.db import models
+from django.conf import settings
 
 
 def image_file_path(image, _) -> str:
@@ -12,6 +13,13 @@ def image_file_path(image, _) -> str:
 
 
 class Image(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='uploaded_images',
+        null=True,
+        blank=True
+    )
     attachment_key = models.UUIDField(
         max_length=255,
         default=uuid.uuid4,

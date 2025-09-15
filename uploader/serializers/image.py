@@ -7,8 +7,8 @@ from uploader.models import Image
 class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ["attachment_key", "file", "description", "uploaded_on", "url"]
-        read_only_fields = ["attachment_key", "uploaded_on", "url"]
+        fields = ["user", "attachment_key", "file", "description", "uploaded_on", "url"]
+        read_only_fields = ["user", "attachment_key", "uploaded_on", "url"]
         extra_kwargs = {"file": {"write_only": True}}
 
     def validate_file(self, value):
@@ -16,6 +16,12 @@ class ImageUploadSerializer(serializers.ModelSerializer):
         if value.content_type not in valid_content_types:
             raise serializers.ValidationError("Invalid or corrupted image.")
         return value
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        if request and request.user and request.user.is_authenticated:
+            validated_data['user'] = request.user
+        return super().create(validated_data)
 
 
 class ImageSerializer(serializers.ModelSerializer):

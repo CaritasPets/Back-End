@@ -38,6 +38,7 @@ class Pet(models.Model):
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets"
     )
+    peso = models.DecimalField(max_digits=5, decimal_places=3 ,null=True, blank=True)
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets_organizacao"
@@ -87,6 +88,7 @@ class Perdidos(models.Model):
     raca = models.ForeignKey(
         Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
     )
+    peso = models.DecimalField(max_digits=5, decimal_places=3 ,null=True, blank=True)
     porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
     dono = models.ForeignKey(
         User,

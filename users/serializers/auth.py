@@ -36,7 +36,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             telefone=validated_data.get('telefone'),
             data_nascimento=validated_data.get('data_nascimento'),
         )
-        
+
         # Set profile picture if provided
         if foto_perfil_id:
             try:
@@ -46,7 +46,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 user.save()
             except Image.DoesNotExist:
                 pass  # Ignore if image doesn't exist
-        
+
         return user
 
 class UserLoginSerializer(serializers.Serializer):
@@ -87,7 +87,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     Serializer para perfil do usuário
     """
     foto_perfil = ImageSerializer(read_only=True)
-    
+
     class Meta:
         model = User
         fields = (
@@ -95,3 +95,24 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'cpf', 'telefone', 'data_nascimento', 'date_joined', 'foto_perfil'
         )
         read_only_fields = ('id', 'username', 'date_joined')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.context.get('request') and self.context['request'].method in ['PUT', 'PATCH']:
+            self.fields['foto_perfil'] = serializers.UUIDField(required=False, write_only=True)
+
+    def update(self, instance, validated_data):
+        foto_perfil_id = validated_data.pop('foto_perfil', None)
+        user = super().update(instance, validated_data)
+
+        # Set profile picture if provided
+        if foto_perfil_id:
+            try:
+                from uploader.models import Image
+                image = Image.objects.get(attachment_key=foto_perfil_id)
+                user.foto_perfil = image
+                user.save()
+            except Image.DoesNotExist:
+                pass  # Ignore if image doesn't exist
+
+        return user

@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import parsers
 from sistema.permissions import IsOrganizationAdminOrReadOnly
 from ..models import Organizacao
 from ..serializers import OrganizacaoSerializer

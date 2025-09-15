@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
+from rest_framework import serializers
 from ..models import Pet
 from ..models import Perdidos
 from uploader.models import Image
