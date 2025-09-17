@@ -1,45 +1,44 @@
 from django.db import models 
 
 from .organizacao import Organizacao
-from .raca import Raca
 from users.models import User
 from uploader.models import Image
 
 class Pet(models.Model):
     PORTE_CHOICES = [
-        ('p', 'Pequeno'),
-        ('m', 'Médio'),
-        ('g', 'Grande')
+        ('pequeno', 'Pequeno'),
+        ('medio', 'Médio'),
+        ('grande', 'Grande')
     ]
     VACINADO_CHOICES = [
-        ('s', 'sim'),
-        ('n', 'nao')
+        ('sim', 'Sim'),
+        ('nao', 'Nao'),
+        ('parcialmente', 'Parcialmente'),
+        ('nao-sei', 'Não sei')
     ]
     CASTRADO_CHOICES = [
-        ('s', 'sim'),
-        ('n', 'nao')
+        ('sim', 'sim'),
+        ('nao', 'nao')
     ]
-    SEXO_CHOICES = [
-        ('m', 'macho'),
-        ('f', 'femea')
-    ]
-    TIPO_CHOICES = [
+    GENERO_CHOICES = [
+        ('macho', 'macho'),
+        ('femea', 'femea')
+    ]      
+    ESPECIE_CHOICES = [
         ('cachorro', 'Cachorro'),
         ('gato', 'Gato'),
+        ('passaro', 'Pássaro'),
         ('outro', 'Outro')
     ]
 
     nome = models.CharField(max_length=50, null=False, blank=False, default='')
-    tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
-    data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
-    castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
-    genero = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
-    vacinado = models.CharField(max_length=1, choices=VACINADO_CHOICES, default='n')
-    raca = models.ForeignKey(
-        Raca, on_delete=models.PROTECT, related_name="pets"
-    )
+    especie = models.CharField(max_length=25, choices=ESPECIE_CHOICES, null=False, blank=False)
+    castrado = models.CharField(max_length=3, choices=CASTRADO_CHOICES, default='nao')
+    genero = models.CharField(max_length=5, choices=GENERO_CHOICES, default='macho')
+    vacinado = models.CharField(max_length=12, choices=VACINADO_CHOICES, default='nao')
     peso = models.DecimalField(max_digits=5, decimal_places=3 ,null=True, blank=True)
-    porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
+    porte = models.CharField(max_length=7, choices=PORTE_CHOICES, default='pequeno')
+    raca = models.CharField(max_length=100, blank=True, null=True)
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets_organizacao"
     )
@@ -53,50 +52,31 @@ class Pet(models.Model):
     )
 
     def __str__(self):
-        return f"{self.tipo} ({self.org})"
+        return f"{self.especie} ({self.org})"
 
 class Perdidos(models.Model):
-    PORTE_CHOICES = [
-        ('p', 'Pequeno'),
-        ('m', 'Médio'),
-        ('g', 'Grande')
-    ]
-    VACINADO_CHOICES = [
-        ('s', 'sim'),
-        ('n', 'nao')
-    ]
-    CASTRADO_CHOICES = [
-        ('s', 'sim'),
-        ('n', 'nao')
-    ]
-    SEXO_CHOICES = [
-        ('m', 'macho'),
-        ('f', 'femea')
+    GENERO_CHOICES = [
+        ('macho', 'macho'),
+        ('femea', 'femea')
     ]      
-    TIPO_CHOICES = [
+    ESPECIE_CHOICES = [
         ('cachorro', 'Cachorro'),
         ('gato', 'Gato'),
+        ('passaro', 'Pássaro'),
         ('outro', 'Outro')
     ]
 
     nome = models.CharField(max_length=50, null=False, blank=False, default='')
-    tipo = models.CharField(max_length=25, choices=TIPO_CHOICES, null=False, blank=False)
-    data_nascimento = models.DateField(null=False, blank=False, default='2000-01-01')
-    castrado = models.CharField(max_length=1, choices=CASTRADO_CHOICES, default='n')
-    genero = models.CharField(max_length=1, choices=SEXO_CHOICES, default='m')
-    vacinado = models.CharField(max_length=1, choices=VACINADO_CHOICES, default='n')
-    raca = models.ForeignKey(
-        Raca, on_delete=models.PROTECT, related_name="pets_perdidos"
-    )
-    peso = models.DecimalField(max_digits=5, decimal_places=3 ,null=True, blank=True)
-    porte = models.CharField(max_length=1, choices=PORTE_CHOICES, default='p')
+    especie = models.CharField(max_length=25, choices=ESPECIE_CHOICES, null=False, blank=False)
+    local = models.CharField(max_length=100, null=False, blank=False, default='')
+    caracteristicas = models.CharField(max_length=300, null=True, blank=True)
+    genero = models.CharField(max_length=5, choices=GENERO_CHOICES, default='macho')
     dono = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='perdidos_user',
         default=None
     )
-    local = models.CharField(max_length=100, null=False, blank=False, default='')
     foto = models.ForeignKey(
         Image,
         related_name="+",
@@ -107,5 +87,6 @@ class Perdidos(models.Model):
     )
 
     def __str__(self):
-        return f"{self.tipo} ({self.org})"
+        return f"{self.especie} ({self.dono})"
+
 

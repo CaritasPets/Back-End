@@ -14,13 +14,12 @@ from uploader.router import router as uploader_router
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
-from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet, RacaViewSet
+from sistema.views import OrganizacaoViewSet, PetViewSet, PerdidosViewSet
 from uploader.views import ImageUploadViewSet, DocumentUploadViewSet
 
 router.register(r"organizacoes", OrganizacaoViewSet)
 router.register(r"pets", PetViewSet)
 router.register(r"perdidos", PerdidosViewSet)
-router.register(r"racas", RacaViewSet)
 router.register(r"images", ImageUploadViewSet)
 router.register(r"documents", DocumentUploadViewSet)
 
