@@ -132,10 +132,10 @@ FILE_UPLOAD_PERMISSIONS = 0o640
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),  # Render fornece essa variável
-        conn_max_age=600,  # mantém conexões abertas para performance
-        ssl_require=True   # força SSL no banco do Render
+    "default": dj_database_url.config(
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",  # fallback local
+        conn_max_age=600,
+        ssl_require=False,  # coloque True no Render com Postgres
     )
 }
 

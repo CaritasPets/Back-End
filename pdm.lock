@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:37d69de6fdce5078b4d4e1f9672e4ffa5b87aa3268a7497d963e0fc4631f4d40"
+content_hash = "sha256:b0efdda13dbda8c4a476b056486a4681ff7a1bc8d9948b95db06a3d38ba8324c"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -307,6 +307,17 @@ marker = "sys_platform == \"win32\""
 files = [
     {file = "tzdata-2025.2-py2.py3-none-any.whl", hash = "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8"},
     {file = "tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9"},
+]
+
+[[package]]
+name = "waitress"
+version = "3.0.2"
+requires_python = ">=3.9.0"
+summary = "Waitress WSGI server"
+groups = ["default"]
+files = [
+    {file = "waitress-3.0.2-py3-none-any.whl", hash = "sha256:c56d67fd6e87c2ee598b76abdd4e96cfad1f24cacdea5078d382b1f9d7b5ed2e"},
+    {file = "waitress-3.0.2.tar.gz", hash = "sha256:682aaaf2af0c44ada4abfb70ded36393f0e307f4ab9456a215ce0020baefc31f"},
 ]
 
 [[package]]
