@@ -6,11 +6,12 @@ from ..models import Perdidos
 class PetSerializer(ModelSerializer):
     class Meta:
         model = Pet
-        fields = ['nome', 'especie', 'castrado', 'genero', 'vacinado', 'peso', 'porte', 'raca', 'foto']
+        fields = ['id', 'nome', 'especie', 'castrado', 'genero', 'vacinado', 'peso', 'porte', 'raca', 'foto', 'org']
         read_only_fields = ['org']
-
+        depth = 1
 class PerdidosSerializer(ModelSerializer):
     class Meta:
         model = Perdidos
-        fields = ['nome', 'especie', 'local', 'caracteristicas', 'genero', 'foto']
+        fields = ['id', 'nome', 'especie', 'local', 'caracteristicas', 'genero', 'foto', 'dono']
         read_only_fields = ['dono']
+        depth = 1
