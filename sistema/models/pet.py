@@ -42,14 +42,7 @@ class Pet(models.Model):
     org = models.ForeignKey(
         Organizacao, on_delete=models.PROTECT, related_name="pets_organizacao"
     )
-    foto = models.ForeignKey(
-        Image,
-        related_name="+",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False,
-        default=None,
-    )
+    foto = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f"{self.especie} ({self.org})"
@@ -77,14 +70,7 @@ class Perdidos(models.Model):
         related_name='perdidos_user',
         default=None
     )
-    foto = models.ForeignKey(
-        Image,
-        related_name="+",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False,
-        default=None,
-    )
+    foto = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f"{self.especie} ({self.dono})"

@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import parsers
+from rest_framework import parsers, serializers
 from ..models import Pet
 from ..models import Perdidos
 from ..serializers import PetSerializer
@@ -14,6 +14,8 @@ class PetViewSet(ModelViewSet):
 
    def perform_create(self, serializer):
       org = self.request.user.organization_admin.first()
+      if not org:
+          raise serializers.ValidationError("User must be admin of an organization to create pets.")
       serializer.save(org=org)
 
 class PerdidosViewSet(ModelViewSet):
