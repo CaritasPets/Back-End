@@ -1,14 +1,18 @@
-from rest_framework.serializers import ModelSerializer
-from models import Pet
-from models import Perdidos
-
+from rest_framework.serializers import ModelSerializer, SlugRelatedField
+from rest_framework import serializers
+from ..models import Pet
+from ..models import Perdidos
 
 class PetSerializer(ModelSerializer):
-   class Meta:
-       model = Pet
-       fields = "__all__"
-    
+    class Meta:
+        model = Pet
+        fields = ['id', 'nome', 'especie', 'castrado', 'genero', 'vacinado', 'peso', 'porte', 'raca', 'foto', 'org']
+        read_only_fields = ['org']
+        depth = 2
+        
 class PerdidosSerializer(ModelSerializer):
-   class Meta:
-       model = Perdidos
-       fields = "__all__"
+    class Meta:
+        model = Perdidos
+        fields = ['id', 'nome', 'especie', 'local', 'caracteristicas', 'genero', 'foto', 'dono']
+        read_only_fields = ['dono']
+        depth = 2
