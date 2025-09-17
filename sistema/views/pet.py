@@ -13,7 +13,7 @@ class PetViewSet(ModelViewSet):
    permission_classes = [CanCreatePet]
 
    def perform_create(self, serializer):
-      org = self.request.user.organization_admin.first()
+      org = self.request.user.organization_admin
       if not org:
           raise serializers.ValidationError("User must be admin of an organization to create pets.")
       serializer.save(org=org)

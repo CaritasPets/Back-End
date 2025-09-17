@@ -18,7 +18,7 @@ class CanCreatePet(BasePermission):
             return request.user.is_authenticated
 
         if model_name == "Pet":
-            return hasattr(request.user, "organization_admin") and request.user.organization_admin.exists()
+            return hasattr(request.user, "organization_admin") and request.user.organization_admin is not None
 
         return False
 
@@ -32,6 +32,6 @@ class CanCreatePet(BasePermission):
             return request.user.is_authenticated
 
         if model_name == "Pet":
-            return hasattr(request.user, "organization_admin") and request.user.organization_admin.exists()
+            return hasattr(request.user, "organization_admin") and request.user.organization_admin is not None
 
         return False

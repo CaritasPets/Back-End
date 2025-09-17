@@ -8,10 +8,11 @@ class PetSerializer(ModelSerializer):
         model = Pet
         fields = ['id', 'nome', 'especie', 'castrado', 'genero', 'vacinado', 'peso', 'porte', 'raca', 'foto', 'org']
         read_only_fields = ['org']
-        depth = 1
+        depth = 2
+        
 class PerdidosSerializer(ModelSerializer):
     class Meta:
         model = Perdidos
         fields = ['id', 'nome', 'especie', 'local', 'caracteristicas', 'genero', 'foto', 'dono']
         read_only_fields = ['dono']
-        depth = 1
+        depth = 2

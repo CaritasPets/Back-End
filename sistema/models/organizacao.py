@@ -1,7 +1,6 @@
 from django.db import models
 from users.models import User
 from django.conf import settings
-from uploader.models import Image
 
 class Organizacao(models.Model):
     admin = models.OneToOneField(
@@ -19,14 +18,7 @@ class Organizacao(models.Model):
     instagram = models.CharField(max_length=100, null=True, blank=True)
     faceboook = models.CharField(max_length=100, null=True, blank=True)
     descricao = models.CharField(max_length=200, null=True, blank=True)
-    foto_perfil = models.ForeignKey(
-        Image,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name='Foto de Perfil',
-        related_name='organizacoes'
-    )
+    foto_perfil = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f"{self.nome}"
