@@ -18,8 +18,8 @@ class Organizacao(models.Model):
     instagram = models.CharField(max_length=100, null=True, blank=True)
     faceboook = models.CharField(max_length=100, null=True, blank=True)
     descricao = models.CharField(max_length=200, null=True, blank=True)
-    foto_perfil = models.CharField(max_length=500, blank=True, null=True)
-
+    foto = models.ImageField(upload_to="images/", blank=True, null=True)
+    
     def __str__(self):
         return f"{self.nome}"
     

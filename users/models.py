@@ -33,14 +33,7 @@ class User(AbstractUser):
         blank=True,
         verbose_name='Data de Nascimento'
     )
-    foto_perfil = models.ForeignKey(
-        Image,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name='Foto de Perfil',
-        related_name='usuarios'
-    )
+    foto_perfil = models.ImageField(upload_to="images/", blank=True, null=True)
     
     def __str__(self):
         return f"{self.username}"
